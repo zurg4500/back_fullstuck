@@ -1,7 +1,9 @@
 from rest_framework import routers
-from .views import CategoryViewSet
+
+from .views import ProductViewSet
 
 router = routers.DefaultRouter()
-router.register("category", CategoryViewSet, "category")
+
+router.register("product", ProductViewSet, "products")
 
 urlpatterns = router.urls

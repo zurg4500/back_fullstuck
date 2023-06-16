@@ -12,5 +12,5 @@ class Category(models.Model):
         return super().save(*args, **kwargs)
 
     class Meta:
-        verbose_name = 'Category'
-        verbose_name_plural = 'Categories'
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
