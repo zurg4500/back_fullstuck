@@ -14,7 +14,6 @@ class Product(models.Model):
     category = models.ForeignKey('category.Category', on_delete=models.CASCADE, related_name='products')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    image = models.ImageField(upload_to='product_images')
 
     def __str__(self):
         return self.title
@@ -22,3 +21,12 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Product'
         verbose_name_plural = 'Products'
+
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='product-images')
+
+    def __str__(self):
+        return f'{self.pk} to {self.product.title}'
+    
