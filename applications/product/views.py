@@ -7,7 +7,7 @@ from permissions.permissions import IsOwnerOrIsAdminUser
 
 
 class ProductViewSet(ModelViewSet):
-    queryset = Product.objects.prefetch_related('images').all()  # TODO: optimize
+    queryset = Product.objects.prefetch_related('images', 'description', 'title', 'price', 'year').all()
     serializer_class = ProductSerializer
 
     def get_permissions(self):

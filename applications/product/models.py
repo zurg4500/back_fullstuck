@@ -1,15 +1,25 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models.signals import pre_save, post_save
+from django.core.validators import MinValueValidator, MaxValueValidator
+import datetime
+
 
 from .signals import get_pre_save, product_post_save
 
 
 class Product(models.Model):
     slug = models.SlugField(primary_key=True, blank=True)
-    title = models.CharField(max_length=255)
+    title= models.CharField(max_length=60)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    year = models.PositiveIntegerField(
+        default=datetime.date.today().year,
+        validators=[
+            MinValueValidator(1900),
+            MaxValueValidator(datetime.date.today().year)
+        ]
+    )
     user = models.ForeignKey(
         get_user_model(), on_delete=models.CASCADE, related_name="products"
     )
