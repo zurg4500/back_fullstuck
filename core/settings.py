@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", False)
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split()
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -49,6 +49,16 @@ INSTALLED_APPS = [
     "djoser",
     "applications.category",
     "applications.product",
+
+    'rest_framework.authtoken',
+    'rest_auth',
+    'allauth',
+    'account.apps.AccountConfig',
+    'celery',
+    'django_redis',
+    'redis',
+    'search',
+
 ]
 
 MIDDLEWARE = [
@@ -146,6 +156,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
+        'rest_framework.authentication.TokenAuthentication',
     )
 }
 
@@ -192,6 +203,9 @@ CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379",
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
     }
 }
 
@@ -216,3 +230,12 @@ LOGGING = {
 }
 
 DOMAIN = 'localhost:3000'
+
+REST_AUTH_SERIALIZERS = {
+    'LOGIN_SERIALIZER': 'accounts.serializers.CustomLoginSerializer',
+    'PASSWORD_RESET_SERIALIZER': 'accounts.serializers.CustomPasswordResetSerializer',
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+CORS_ORIGIN_ALLOW_ALL = True
