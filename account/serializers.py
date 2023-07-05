@@ -59,7 +59,7 @@ class LoginSerializer(serializers.Serializer):
         user = User.objects.filter(username=username).exists()
         if not user:
             raise serializers.ValidationError(
-                {'message': f'Нет пользователя с таким {username}'},
+                {'message': 'Нет пользователя с таким именем'},
                 code=status.HTTP_400_BAD_REQUEST
             )
         return username
@@ -95,7 +95,7 @@ class PasswordChange(serializers.Serializer):
         user = self.context.get('request').user
         if user.sheck_password(current_password):
             return current_password
-        raise serializers.ValidationError('Wrong password')
+        raise serializers.ValidationError('Неверный пароль')
 
     def validate(self, attrs: dict):
         new_pass = attrs.get('new_password')
@@ -116,7 +116,7 @@ class PasswordDropSerializer(serializers.Serializer):
 
     def validate_email(self, email):
         if not User.objects.filter(email=email).exists():
-            raise serializers.ValidationError('User with this email does not exist')
+            raise serializers.ValidationError('Пользователя с таким email не существует')
         return email
 
     def send_activation_code(self):
@@ -133,7 +133,7 @@ class ChangeForgottenPassword(serializers.Serializer):
 
     def validate_code(self, code):
         if not User.objects.filter(activation_code=code).exists():
-            raise serializers.ValidationError('Wrong code')
+            raise serializers.ValidationError('Неверный код валидации')
         return code
     
     def validate(self, attrs: dict):

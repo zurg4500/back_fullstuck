@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 
 
 class RegistrarionView(CreateAPIView):
-    serializer_class = RegistrationSerializer
+    serializer_class = RegistrationSerializer 
 
 
 class ActivationView(CreateAPIView):
@@ -39,6 +39,7 @@ class LogoutView(DestroyAPIView):
     
 class PasswordChangeView(CreateAPIView):
     permission_classes = [IsAuthenticated]
+    serializer_class = PasswordChange
 
     def post(self, request, *args, **kwargs):
         serializer = PasswordChange(data=request.data, context = {'request': request})
@@ -48,6 +49,7 @@ class PasswordChangeView(CreateAPIView):
      
 
 class DropPasswordView(CreateAPIView):
+    serializer_class = PasswordDropSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = PasswordDropSerializer(data=request.data)

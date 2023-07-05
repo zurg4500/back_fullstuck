@@ -30,7 +30,7 @@ schema_view = get_schema_view(
     permission_classes=[permissions.AllowAny],
 )
 
-urlpatterns = [
+urlpatterns = [ 
     path("admin/", admin.site.urls),
     path("auth/", include("djoser.urls")),
     path("auth/", include("djoser.urls.jwt")),
@@ -40,6 +40,6 @@ urlpatterns = [
     path('api/account/', include('account.urls')),
     # path('api/rest-auth/', include('rest_auth.urls')),
     # path('api/rest-auth/registration/', include('rest_auth.registration.urls')),
-    path('api/rest-auth/password/reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
-    path('api/', include('search.urls')),
+    # path('api/rest-auth/password/reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
+    # path('api/', include('search.urls')),
 ]
